@@ -11,19 +11,19 @@ import java.util.Optional;
  * @author Igor Suvorov
  */
 public interface ApplicantService {
-    public ApplicantDTO save(ApplicantDTO applicantDTO);
+    ApplicantDTO save(ApplicantDTO applicantDTO);
 
-    public ApplicantDTO update(long id, ApplicantDTO applicantDTO);
+    ApplicantDTO update(long id, ApplicantDTO applicantDTO);
 
-    public ApplicantDTO findApplicantsByFirstAndLastName(String first, String last);
+    ApplicantDTO findApplicantsByFirstAndLastName(String first, String last);
 
-    public ApplicantDTO findApplicantsBySkills(String skill);
+    ApplicantDTO findApplicantsBySkills(String skill);
 
-    public ApplicantDTO findApplicantsByCity(City city);
+    ApplicantDTO findApplicantsByCity(City city);
 
-    public ApplicantDTO findById(long id);
+    ApplicantDTO findById(long id);
 
     void delete(long id);
 
-    public ApplicantResponse getAllApplicants(int pageNo, int pageSize, String sortBy, String sortDir);
+    ApplicantResponse getAllApplicants(int pageNo, int pageSize, String sortBy, String sortDir);
 }

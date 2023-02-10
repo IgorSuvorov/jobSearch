@@ -19,5 +19,5 @@ public interface JobService {
     List<JobDTO> findJobsByTitleAndCompanyName(String title, String companyName);
     JobDTO findById(long id);
     void delete(long id);
-    public JobResponse getAllJobs(int pageNo, int pageSize, String sortBy, String sortDir);
+    JobResponse getAllJobs(int pageNo, int pageSize, String sortBy, String sortDir);
 }
