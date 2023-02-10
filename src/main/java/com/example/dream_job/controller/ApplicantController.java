@@ -1,13 +1,16 @@
 package com.example.dream_job.controller;
 import com.example.dream_job.model.Applicant;
+import com.example.dream_job.payload.ApplicantDTO;
 import com.example.dream_job.service.ApplicantService;
+import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Igor Suvorov
@@ -28,27 +31,29 @@ public class ApplicantController {
         return "applicants";
     }
 
-    @GetMapping("/addApplicant")
-    public String addApplicant(Model model) {
-        model.addAttribute("applicants", new Applicant(0, "Fill the name field"));
-        return "addApplicant";
+    @ApiOperation(value = "Add new applicant REST API")
+    @PreAuthorize("hasRole('APPLICANT')")
+    @PostMapping("/addApplicant")
+    public ResponseEntity<ApplicantDTO> addApplicant(@Valid @RequestBody ApplicantDTO applicantDTO) {
+        return new ResponseEntity<>(applicantService.save(applicantDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/formUpdateApplicant/{ApplicantId}")
-    public String formUpdateApplicant (Model model, @PathVariable ("ApplicantId") int id) {
-        model.addAttribute("candidate", applicantService.findById(id));
-        return "updateApplicant";
+    @ApiOperation(value = "Update applicant profile By Id REST API")
+    @PreAuthorize("hasRole('APPLICANT')")
+    @PutMapping("updateApplicant/{id}")
+    public ResponseEntity<ApplicantDTO> updateApplicant(
+            @PathVariable(name = "id") long id,
+            @Valid @RequestBody ApplicantDTO applicantDTO
+    ) {
+        return new ResponseEntity<>(applicantService.update(id, applicantDTO), HttpStatus.OK);
     }
 
-    @PostMapping("/updateCandidate")
-    public String updateApplicant(@ModelAttribute Applicant candidate) {
-        applicantService.saveCandidate(candidate);
-        return "redirect:/applicants";
+    @ApiOperation(value = "Delete applicant profile By Id REST API")
+    @PreAuthorize("hasRole('APPLICANT')")
+    @DeleteMapping("deleteApplicant/{id}")
+    public ResponseEntity<Void> deleteApplicant(@PathVariable(name = "id") long id) {
+        applicantService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/createCandidate")
-    public String createApplicant(@ModelAttribute Applicant applicant) {
-        applicantService.saveCandidate(applicant);
-        return "redirect:/applicants";
-    }
 }

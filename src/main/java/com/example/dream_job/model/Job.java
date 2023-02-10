@@ -1,18 +1,30 @@
 package com.example.dream_job.model;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Job implements Serializable {
     @NonNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NonNull
-    private String name;
+    private String title;
+    @NonNull
+    private String CompanyName;
+    @NonNull
     private City city;
+    @NonNull
     private String description;
+    @NonNull
+    private List<String> skills;
 }

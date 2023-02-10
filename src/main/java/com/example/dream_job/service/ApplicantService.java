@@ -3,6 +3,7 @@ package com.example.dream_job.service;
 import com.example.dream_job.model.Applicant;
 import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
+import com.example.dream_job.payload.ApplicantResponse;
 
 import java.util.Optional;
 
@@ -14,11 +15,15 @@ public interface ApplicantService {
 
     public ApplicantDTO update(long id, ApplicantDTO applicantDTO);
 
-    public Optional<Applicant> findApplicantsByFirstAndLastName(String first, String last);
+    public ApplicantDTO findApplicantsByFirstAndLastName(String first, String last);
 
-    public Optional<Applicant> findApplicantsBySkills(String skill);
+    public ApplicantDTO findApplicantsBySkills(String skill);
 
-    public Optional<Applicant> findApplicantsByCity(City city);
+    public ApplicantDTO findApplicantsByCity(City city);
 
-    Object findAll();
+    public ApplicantDTO findById(long id);
+
+    void delete(long id);
+
+    public ApplicantResponse getAllApplicants(int pageNo, int pageSize, String sortBy, String sortDir);
 }
