@@ -7,13 +7,9 @@ import com.example.dream_job.payload.JobDTO;
 import com.example.dream_job.repository.JobRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import com.example.dream_job.payload.JobResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,73 +47,45 @@ public class JobServiceImpl implements JobService {
         return mapEntityToDTO(updatedJob);
     }
 
-    @Override
-    public JobResponse getAllJobs(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public Page<JobDTO> getAllJobs(int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Job> jobs = jobRepository.findAll(pageable);
-        List<Job> listOfJobs = jobs.getContent();
 
-        List<JobDTO> content = listOfJobs.stream().
-                map(job -> mapEntityToDTO(job)).
-                collect(Collectors.toList());
-
-        JobResponse jobResponse = new JobResponse();
-        jobResponse.setContent(content);
-        jobResponse.setPageNo(jobs.getNumber());
-        jobResponse.setPageSize(jobs.getSize());
-        jobResponse.setTotalElements(jobs.getTotalElements());
-        jobResponse.setTotalPages(jobs.getTotalPages());
-        jobResponse.setLast(jobs.isLast());
-
-        return jobResponse;
+        return jobs.map(this::mapEntityToDTO);
     }
 
     @Override
-    public List<JobDTO> findJobsByCity(City city) {
-        List<Job> jobs = jobRepository.findAllByCity(city);
-        List<JobDTO> jobDTOs = new ArrayList<>();
-        for (Job job : jobs) {
-            jobDTOs.add(mapEntityToDTO(job));
-        }
-        return jobDTOs;
+    public Page<JobDTO> findJobsByTitleAndCity(String title, City city, Pageable pageable) {
+        Page<Job> jobs = jobRepository.findJobsByTitleAndCity(title, city, pageable);
+        List<JobDTO> jobDTOs = jobs.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+        return new PageImpl<>(jobDTOs, pageable, jobs.getTotalElements());
     }
 
     @Override
-    public List<JobDTO> findJobsBySkills(String skill) {
-        List<Job> jobs = jobRepository.findAllBySkillsContaining(skill);
-        List<JobDTO> jobDTOs = new ArrayList<>();
-        for (Job job : jobs) {
-            jobDTOs.add(mapEntityToDTO(job));
-        }
-        return jobDTOs;
+    public Page<JobDTO> findJobsByCity(City city, Pageable pageable) {
+        Page<Job> jobs = jobRepository.findJobsByCity(city, pageable);
+        List<JobDTO> jobDTOs = jobs.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+        return new PageImpl<>(jobDTOs, pageable, jobs.getTotalElements());
     }
 
     @Override
-    public List<JobDTO> findJobByTitle(String title) {
-        List<Job> jobs = jobRepository.findAllByTitleContaining(title);
-        List<JobDTO> jobDTOs = new ArrayList<>();
-        for (Job job : jobs) {
-            jobDTOs.add(mapEntityToDTO(job));
-        }
-        return jobDTOs;
+    public Page<JobDTO> findJobsBySkills(String skill, Pageable pageable) {
+        Page<Job> jobs = jobRepository.findJobsBySkills(skill, pageable);
+        return jobs.map(this::mapEntityToDTO);
     }
 
     @Override
-    public List<JobDTO> findJobsByTitleAndCompanyName(String title, String companyName) {
-        List<Job> jobs = jobRepository.findJobsByTitleAndCompanyName(title, companyName);
-        List<JobDTO> jobDTOs = new ArrayList<>();
-        for (Job job : jobs) {
-            jobDTOs.add(mapEntityToDTO(job));
-        }
-        return jobDTOs;
+    public Page<JobDTO> findJobsByTitle(String title, Pageable pageable) {
+        Page<Job> jobs = jobRepository.findJobsByTitle(title, pageable);
+        return jobs.map(this::mapEntityToDTO);
     }
 
     @Override
-    public JobDTO findById(long id) {
+    public JobDTO findJobById(long id) {
         Job job = jobRepository.findById(id).
                 orElseThrow(() -> new JobNotFoundException(id));
         return mapEntityToDTO(job);

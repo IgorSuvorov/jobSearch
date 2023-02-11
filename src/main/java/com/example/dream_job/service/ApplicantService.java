@@ -1,11 +1,7 @@
 package com.example.dream_job.service;
 
-import com.example.dream_job.model.Applicant;
 import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
-import com.example.dream_job.payload.ApplicantResponse;
-
-import java.util.Optional;
 
 /**
  * @author Igor Suvorov

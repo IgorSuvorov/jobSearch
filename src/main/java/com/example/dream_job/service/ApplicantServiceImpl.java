@@ -4,7 +4,6 @@ import com.example.dream_job.exceptions.ApplicantNotFoundException;
 import com.example.dream_job.model.Applicant;
 import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
-import com.example.dream_job.payload.ApplicantResponse;
 import com.example.dream_job.repository.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

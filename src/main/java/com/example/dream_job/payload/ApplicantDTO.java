@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,5 +22,6 @@ public class ApplicantDTO {
     private City city;
     private String firstName;
     private String lastName;
+    private Date updated;
     List<String> skills;
 }

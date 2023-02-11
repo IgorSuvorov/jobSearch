@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +26,8 @@ public class JobDTO {
     private City city;
     @NotBlank
     private String description;
+    @NotEmpty
+    private Date updated;
     @NotEmpty
     private List<String> skills;
 }

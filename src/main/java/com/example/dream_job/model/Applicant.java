@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,4 +23,5 @@ public class Applicant {
     private String firstName;
     private String lastName;
     List<String> skills;
+    private Date updated;
 }

@@ -1,8 +1,6 @@
 package com.example.dream_job.controller;
-import com.example.dream_job.model.Applicant;
 import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
-import com.example.dream_job.payload.ApplicantResponse;
 import com.example.dream_job.service.ApplicantService;
 import com.example.dream_job.utilities.AppConstants;
 import io.swagger.annotations.ApiOperation;
@@ -12,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**

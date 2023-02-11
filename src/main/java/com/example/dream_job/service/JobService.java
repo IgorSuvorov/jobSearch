@@ -1,11 +1,9 @@
 package com.example.dream_job.service;
 
 import com.example.dream_job.model.City;
-import com.example.dream_job.model.Job;
 import com.example.dream_job.payload.JobDTO;
-import com.example.dream_job.payload.JobResponse;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author Igor Suvorov
@@ -13,11 +11,16 @@ import java.util.List;
 public interface JobService {
     JobDTO save(JobDTO jobDTO);
     JobDTO update(long id, JobDTO jobDTO);
-    List<JobDTO> findJobsByCity(City city);
-    List<JobDTO> findJobsBySkills(String skill);
-    List<JobDTO> findJobByTitle(String title);
-    List<JobDTO> findJobsByTitleAndCompanyName(String title, String companyName);
-    JobDTO findById(long id);
+
+    Page<JobDTO> findJobsByCity(City city, Pageable pageable);
+
+    Page<JobDTO> findJobsBySkills(String skill, Pageable pageable);
+
+    Page<JobDTO> findJobsByTitle(String title, Pageable pageable);
+
+    JobDTO findJobById(long id);
     void delete(long id);
-    JobResponse getAllJobs(int pageNo, int pageSize, String sortBy, String sortDir);
+    Page<JobDTO> getAllJobs(int pageNo, int pageSize, String sortBy, String sortDir);
+
+    Page<JobDTO> findJobsByTitleAndCity(String title, City city, Pageable pageable);
 }
