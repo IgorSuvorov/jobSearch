@@ -1,6 +1,5 @@
 package com.example.dream_job.payload;
 
-import com.example.dream_job.model.City;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -24,7 +23,7 @@ public class JobDTO {
     @NotBlank
     private String companyName;
     @NonNull
-    private City city;
+    private String city;
     @NotBlank
     private String description;
     @NotEmpty

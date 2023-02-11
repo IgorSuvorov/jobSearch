@@ -2,7 +2,6 @@ package com.example.dream_job.service;
 
 import com.example.dream_job.exceptions.ApplicantNotFoundException;
 import com.example.dream_job.model.Applicant;
-import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
 import com.example.dream_job.repository.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,14 +72,14 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Page<ApplicantDTO> findApplicantsByCity(City city, Pageable pageable) {
+    public Page<ApplicantDTO> findApplicantsByCity(String city, Pageable pageable) {
         Page<Applicant> applicants = applicantRepository.findApplicantsByCity(city, pageable);
         List<ApplicantDTO> applicantDTOs = applicants.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
         return new PageImpl<>(applicantDTOs, pageable, applicants.getTotalElements());
     }
 
     @Override
-    public Page<ApplicantDTO> findApplicantsByTitleAndCity(String title, City city, Pageable pageable) {
+    public Page<ApplicantDTO> findApplicantsByTitleAndCity(String title, String city, Pageable pageable) {
         Page<Applicant> applicants = applicantRepository.findApplicantsByTitleAndCity(title, city, pageable);
         List<ApplicantDTO> applicantDTOs = applicants.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
         return new PageImpl<>(applicantDTOs, pageable, applicants.getTotalElements());

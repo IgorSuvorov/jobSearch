@@ -1,5 +1,4 @@
 package com.example.dream_job.controller;
-import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
 import com.example.dream_job.service.ApplicantService;
 import com.example.dream_job.utilities.AppConstants;
@@ -93,7 +92,7 @@ public class ApplicantController {
 
     @ApiOperation(value = "Find applicants by city REST API")
     @GetMapping("/city/{city}")
-    public ResponseEntity<Page<ApplicantDTO>> findApplicantsByCity(@PathVariable("city") City city, Pageable pageable) {
+    public ResponseEntity<Page<ApplicantDTO>> findApplicantsByCity(@PathVariable("city") String city, Pageable pageable) {
         Page<ApplicantDTO> applicants = applicantService.findApplicantsByCity(city, pageable);
         return new ResponseEntity<>(applicants, HttpStatus.OK);
     }
@@ -102,7 +101,7 @@ public class ApplicantController {
     @GetMapping("/title/{title}/city/{city}")
     public ResponseEntity<Page<ApplicantDTO>> findApplicantsByTitleAndCity(
             @PathVariable("title") String title,
-            @PathVariable("city") City city,
+            @PathVariable("city") String city,
             Pageable pageable) {
         Page<ApplicantDTO> applicants = applicantService.findApplicantsByTitleAndCity(title, city, pageable);
         return new ResponseEntity<>(applicants, HttpStatus.OK);

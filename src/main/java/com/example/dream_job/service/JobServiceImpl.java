@@ -1,7 +1,6 @@
 package com.example.dream_job.service;
 
 import com.example.dream_job.exceptions.JobNotFoundException;
-import com.example.dream_job.model.City;
 import com.example.dream_job.model.Job;
 import com.example.dream_job.payload.JobDTO;
 import com.example.dream_job.repository.JobRepository;
@@ -59,14 +58,14 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Page<JobDTO> findJobsByTitleAndCity(String title, City city, Pageable pageable) {
+    public Page<JobDTO> findJobsByTitleAndCity(String title, String city, Pageable pageable) {
         Page<Job> jobs = jobRepository.findJobsByTitleAndCity(title, city, pageable);
         List<JobDTO> jobDTOs = jobs.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
         return new PageImpl<>(jobDTOs, pageable, jobs.getTotalElements());
     }
 
     @Override
-    public Page<JobDTO> findJobsByCity(City city, Pageable pageable) {
+    public Page<JobDTO> findJobsByCity(String city, Pageable pageable) {
         Page<Job> jobs = jobRepository.findJobsByCity(city, pageable);
         List<JobDTO> jobDTOs = jobs.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
         return new PageImpl<>(jobDTOs, pageable, jobs.getTotalElements());

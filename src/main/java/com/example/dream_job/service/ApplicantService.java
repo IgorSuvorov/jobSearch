@@ -1,8 +1,6 @@
 package com.example.dream_job.service;
 
-import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
-import com.example.dream_job.payload.JobDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,7 +22,7 @@ public interface ApplicantService {
 
     Page<ApplicantDTO> findApplicantsByTitle(String title, Pageable pageable);
 
-    Page<ApplicantDTO> findApplicantsByCity(City city, Pageable pageable);
+    Page<ApplicantDTO> findApplicantsByCity(String city, Pageable pageable);
 
-    Page<ApplicantDTO> findApplicantsByTitleAndCity(String title, City city, Pageable pageable);
+    Page<ApplicantDTO> findApplicantsByTitleAndCity(String title, String city, Pageable pageable);
 }

@@ -1,18 +1,20 @@
 package com.example.dream_job.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.*;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 @Data
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "job")
 public class Job implements Serializable {
     @NonNull
     @Id
@@ -23,10 +25,10 @@ public class Job implements Serializable {
     @NonNull
     private String companyName;
     @NonNull
-    private City city;
+    private String city;
     @NonNull
     private String description;
-    @NonNull
+    @ElementCollection
     private List<String> skills;
     @NonNull
     private Date updated;
