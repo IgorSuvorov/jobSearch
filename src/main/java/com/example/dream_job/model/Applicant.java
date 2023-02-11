@@ -22,6 +22,7 @@ public class Applicant {
     private City city;
     private String firstName;
     private String lastName;
+    private String title;
     List<String> skills;
     private Date updated;
 }

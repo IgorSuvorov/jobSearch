@@ -6,10 +6,7 @@ import com.example.dream_job.model.City;
 import com.example.dream_job.payload.ApplicantDTO;
 import com.example.dream_job.repository.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -37,44 +34,6 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public ApplicantResponse getAllApplicants(int pageNo, int pageSize, String sortBy, String sortDir) {
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        Page<Applicant> applicants = applicantRepository.findAll(pageable);
-        List<Applicant> listOfApplicants = applicants.getContent();
-
-        List<ApplicantDTO> content = listOfApplicants.stream().
-                map(applicant -> mapEntityToDTO(applicant)).
-                collect(Collectors.toList());
-
-        ApplicantResponse applicantResponse = new ApplicantResponse();
-        applicantResponse.setContent(content);
-        applicantResponse.setPageNo(applicants.getNumber());
-        applicantResponse.setPageSize(applicants.getSize());
-        applicantResponse.setTotalElements(applicants.getTotalElements());
-        applicantResponse.setTotalPages(applicants.getTotalPages());
-        applicantResponse.setLast(applicants.isLast());
-
-        return applicantResponse;
-    }
-
-
-    public ApplicantDTO findApplicantsByFirstAndLastName(String first, String last) {
-        return mapEntityToDTO(applicantRepository.findByFirstNameAndLastName(first, last).orElse(null));
-    }
-
-    public ApplicantDTO findApplicantsBySkills(String skill) {
-        return mapEntityToDTO(applicantRepository.findBySkillsContaining(skill).orElse(null));
-    }
-
-    public ApplicantDTO findApplicantsByCity(City city) {
-        return mapEntityToDTO(applicantRepository.findByCity(city).orElse(null));
-    }
-
-    @Override
     public ApplicantDTO update(long id, ApplicantDTO applicantDTO) {
         Applicant applicant = applicantRepository.findById(id)
                 .orElseThrow(() -> new ApplicantNotFoundException(id));
@@ -88,7 +47,6 @@ public class ApplicantServiceImpl implements ApplicantService {
         return mapEntityToDTO(updatedApplicant);
     }
 
-
     @Override
     public ApplicantDTO findById(long id) {
         Applicant applicant = applicantRepository.findById(id).
@@ -97,9 +55,50 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
+    public Page<ApplicantDTO> getAllApplicants(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Page<Applicant> applicants = applicantRepository.findAll(pageable);
+
+        return applicants.map(this::mapEntityToDTO);
+    }
+
+    @Override
+    public Page<ApplicantDTO> findApplicantsBySkills(String skill, Pageable pageable) {
+        Page<Applicant> applicants = applicantRepository.findApplicantsBySkills(skill, pageable);
+        return applicants.map(this::mapEntityToDTO);
+    }
+
+    @Override
+    public Page<ApplicantDTO> findApplicantsByCity(City city, Pageable pageable) {
+        Page<Applicant> applicants = applicantRepository.findApplicantsByCity(city, pageable);
+        List<ApplicantDTO> applicantDTOs = applicants.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+        return new PageImpl<>(applicantDTOs, pageable, applicants.getTotalElements());
+    }
+
+    @Override
+    public Page<ApplicantDTO> findApplicantsByTitleAndCity(String title, City city, Pageable pageable) {
+        Page<Applicant> applicants = applicantRepository.findApplicantsByTitleAndCity(title, city, pageable);
+        List<ApplicantDTO> applicantDTOs = applicants.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+        return new PageImpl<>(applicantDTOs, pageable, applicants.getTotalElements());
+    }
+
+
+    @Override
+    public Page<ApplicantDTO> findApplicantsByTitle(String title, Pageable pageable) {
+        Page<Applicant> applicants = applicantRepository.findApplicantsByTitle(title, pageable);
+        return applicants.map(this::mapEntityToDTO);
+    }
+
+
+    @Override
     public void delete(long id) {
         applicantRepository.deleteById(id);
     }
+
 
     private ApplicantDTO mapEntityToDTO(Applicant applicant) {
         ApplicantDTO applicantDTO = modelMapper.map(applicant, ApplicantDTO.class);

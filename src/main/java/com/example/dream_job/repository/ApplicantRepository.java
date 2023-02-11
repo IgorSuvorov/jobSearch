@@ -2,6 +2,8 @@ package com.example.dream_job.repository;
 
 import com.example.dream_job.model.Applicant;
 import com.example.dream_job.model.City;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -11,8 +13,11 @@ import java.util.Optional;
  */
 public interface ApplicantRepository extends JpaRepository<Applicant, Long> {
 
-    Optional<Applicant> findByFirstNameAndLastName(String first, String last);
+    Page<Applicant> findApplicantsBySkills(String skill, Pageable pageable);
 
-    Optional<Applicant> findBySkillsContaining(String skill);
-    Optional<Applicant> findByCity(City city);
+    Page<Applicant> findApplicantsByCity(City city, Pageable pageable);
+
+    Page<Applicant> findApplicantsByTitleAndCity(String title, City city, Pageable pageable);
+
+    Page<Applicant> findApplicantsByTitle(String title, Pageable pageable);
 }

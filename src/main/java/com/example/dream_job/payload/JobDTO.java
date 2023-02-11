@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 public class JobDTO {
+    @NotEmpty
     private long id;
     @NotBlank
     private String title;
