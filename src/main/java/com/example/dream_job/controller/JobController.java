@@ -33,20 +33,6 @@ public class JobController {
         this.jobService = jobService;
     }
 
-//    @ApiOperation(value = "Get All Jobs REST API")
-//    @GetMapping
-//    public String getAllJobs(
-//            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
-//            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
-//            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
-//            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
-//            Model model
-//    ) {
-//        JobResponse jobResponse = jobService.getAllJobs(pageNo, pageSize, sortBy, sortDir);
-//        model.addAttribute("jobs", jobResponse.getContent());
-//        return "jobs";
-//    }
-
     @GetMapping
     public ResponseEntity<Page<JobDTO>> getAllJobs(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
