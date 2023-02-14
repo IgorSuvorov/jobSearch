@@ -22,10 +22,7 @@ import com.example.dream_job.utilities.AppConstants;
 
 @Controller
 public class JobController {
-    // закончить используя Model model и для аппликантов тоже!!!
-    // добавить paging не только для всех, но и для результатов операций поиска
-    // использовать Page (org.springframework.data.domain.Page) вместо JobResponse - переделать везде где используется
-    // если использовать ResponseEntity, то Model model не нужно
+
     private final JobService jobService;
 
     @Autowired

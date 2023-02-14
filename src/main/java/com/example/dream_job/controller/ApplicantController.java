@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ApplicantController {
+
     private final ApplicantService applicantService;
 
     @Autowired
