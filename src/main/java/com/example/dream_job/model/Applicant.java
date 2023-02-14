@@ -10,9 +10,6 @@ import java.util.List;
 
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "applicant")
 public class Applicant implements Serializable {

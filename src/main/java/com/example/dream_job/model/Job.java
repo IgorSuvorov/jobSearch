@@ -10,9 +10,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "job")
 public class Job implements Serializable {
@@ -32,4 +29,5 @@ public class Job implements Serializable {
     private List<String> skills;
     @NonNull
     private Date updated;
+
 }

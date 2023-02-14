@@ -1,19 +1,14 @@
 package com.example.dream_job.model;
 
-
-import lombok.Getter;
-import lombok.Setter;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * @author Igor Suvorov
  */
-@Getter
-@Setter
+
+@Data
 @Entity
 @Table(name = "roles")
 public class Role {

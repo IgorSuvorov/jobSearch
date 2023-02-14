@@ -1,7 +1,7 @@
 package com.example.dream_job.model;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 /**
