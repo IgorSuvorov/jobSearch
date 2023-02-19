@@ -1,4 +1,4 @@
 CREATE TABLE roles (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  id serial PRIMARY KEY,
   name VARCHAR(50)
 );

@@ -6,4 +6,3 @@ CREATE TABLE applicant (
    skills TEXT[] NOT NULL,
    date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-

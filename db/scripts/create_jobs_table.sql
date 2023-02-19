@@ -4,6 +4,6 @@ CREATE TABLE job (
    company_name TEXT NOT NULL,
    city TEXT NOT NULL,
    description TEXT NOT NULL,
-   skills TEXT[] NOT NULL
+   skills TEXT[] NOT NULL,
    date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
