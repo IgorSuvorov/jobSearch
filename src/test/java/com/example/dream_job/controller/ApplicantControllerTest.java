@@ -1,7 +1,7 @@
 package com.example.dream_job.controller;
 
 import com.example.dream_job.payload.ApplicantDTO;
-import com.example.dream_job.service.ApplicantService;
+import com.example.dream_job.service.applicant.ApplicantService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package com.example.dream_job.controller;
 import com.example.dream_job.payload.ApplicantDTO;
-import com.example.dream_job.service.ApplicantService;
+import com.example.dream_job.service.applicant.ApplicantService;
 import com.example.dream_job.utilities.AppConstants;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;

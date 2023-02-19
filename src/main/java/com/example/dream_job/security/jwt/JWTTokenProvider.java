@@ -1,4 +1,4 @@
-package com.example.dream_job.security;
+package com.example.dream_job.security.jwt;
 
 import com.example.dream_job.exceptions.JobSearchAPIException;
 import io.jsonwebtoken.*;

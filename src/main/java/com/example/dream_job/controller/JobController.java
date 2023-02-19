@@ -1,7 +1,7 @@
 package com.example.dream_job.controller;
 
 import com.example.dream_job.payload.JobDTO;
-import com.example.dream_job.service.JobService;
+import com.example.dream_job.service.job.JobService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,10 @@
-package com.example.dream_job.service;
+package com.example.dream_job.service.job.impl;
 
 import com.example.dream_job.exceptions.JobNotFoundException;
 import com.example.dream_job.model.Job;
 import com.example.dream_job.payload.JobDTO;
 import com.example.dream_job.repository.JobRepository;
+import com.example.dream_job.service.job.JobService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class JobServiceImpl implements JobService {
+
     private JobRepository jobRepository;
     private ModelMapper modelMapper;
 

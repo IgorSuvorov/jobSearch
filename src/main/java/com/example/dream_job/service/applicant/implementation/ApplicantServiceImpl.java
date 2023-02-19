@@ -1,9 +1,10 @@
-package com.example.dream_job.service;
+package com.example.dream_job.service.applicant.implementation;
 
 import com.example.dream_job.exceptions.ApplicantNotFoundException;
 import com.example.dream_job.model.Applicant;
 import com.example.dream_job.payload.ApplicantDTO;
 import com.example.dream_job.repository.ApplicantRepository;
+import com.example.dream_job.service.applicant.ApplicantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ApplicantServiceImpl implements ApplicantService {
+
     private ApplicantRepository applicantRepository;
     private ModelMapper modelMapper;
 
@@ -91,7 +93,6 @@ public class ApplicantServiceImpl implements ApplicantService {
         Page<Applicant> applicants = applicantRepository.findApplicantsByTitle(title, pageable);
         return applicants.map(this::mapEntityToDTO);
     }
-
 
     @Override
     public void delete(long id) {

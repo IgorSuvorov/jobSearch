@@ -1,4 +1,4 @@
-package com.example.dream_job.service;
+package com.example.dream_job.service.job;
 
 import com.example.dream_job.payload.JobDTO;
 import org.springframework.data.domain.Page;

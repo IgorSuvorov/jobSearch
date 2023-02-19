@@ -1,4 +1,4 @@
-package com.example.dream_job.service;
+package com.example.dream_job.service.auth;
 
 
 import com.example.dream_job.payload.LoginDTO;

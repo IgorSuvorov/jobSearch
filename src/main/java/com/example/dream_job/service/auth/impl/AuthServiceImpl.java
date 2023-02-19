@@ -1,4 +1,4 @@
-package com.example.dream_job.service;
+package com.example.dream_job.service.auth.impl;
 
 import com.example.dream_job.exceptions.JobSearchAPIException;
 import com.example.dream_job.model.Role;
@@ -7,7 +7,8 @@ import com.example.dream_job.payload.LoginDTO;
 import com.example.dream_job.payload.SignupDTO;
 import com.example.dream_job.repository.RoleRepository;
 import com.example.dream_job.repository.UserRepository;
-import com.example.dream_job.security.JWTTokenProvider;
+import com.example.dream_job.security.jwt.JWTTokenProvider;
+import com.example.dream_job.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,12 +64,12 @@ public class AuthServiceImpl implements AuthService {
 
         // add check for username exists in database
         if(userRepository.existsByUserName(signupDTO.getUserName())){
-            throw new JobSearchAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+            throw new JobSearchAPIException(HttpStatus.BAD_REQUEST, "UserName already exists!.");
         }
 
         // add check for email exists in database
         if(userRepository.existsByEmail(signupDTO.getEmail())){
-            throw new JobSearchAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+            throw new JobSearchAPIException(HttpStatus.BAD_REQUEST, "Email already exists!.");
         }
 
         User user = new User();
