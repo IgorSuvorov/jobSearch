@@ -2,12 +2,16 @@ package com.example.dream_job.security;
 
 import com.example.dream_job.exceptions.JobSearchAPIException;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
+
 
 /**
  * @author Igor Suvorov
@@ -17,13 +21,15 @@ public class JWTTokenProvider {
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;
-    @Value("${app.jwt-expiration-milliseconds}")
-    private int jwtExpirationInMs;
 
+    @Value("${app-jwt-expiration-milliseconds}")
+    private long jwtExpirationDate;
+
+    // generate JWT token
     public String generateToken(Authentication authentication) {
         String userName = authentication.getName();
         Date currentDate = new Date();
-        Date expirationDate = new Date(currentDate.getTime() + jwtExpirationInMs);
+        Date expirationDate = new Date(currentDate.getTime() + jwtExpirationDate);
 
         String token = Jwts.builder()
                 .setSubject(userName)
@@ -48,8 +54,6 @@ public class JWTTokenProvider {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
-        } catch (SignatureException ex) {
-            throw new JobSearchAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT signature");
         } catch (MalformedJwtException ex) {
             throw new JobSearchAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT token");
         } catch (ExpiredJwtException ex) {

@@ -2,10 +2,12 @@ package com.example.dream_job.controller;
 
 import com.example.dream_job.model.Role;
 import com.example.dream_job.model.User;
+import com.example.dream_job.payload.JWTAuthResponse;
 import com.example.dream_job.payload.LoginDTO;
 import com.example.dream_job.payload.SignupDTO;
 import com.example.dream_job.repository.RoleRepository;
 import com.example.dream_job.repository.UserRepository;
+import com.example.dream_job.service.AuthService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,64 +31,28 @@ import java.util.Collections;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-
-    private UserRepository userRepository;
-
-    private RoleRepository roleRepository;
-
-    private PasswordEncoder passwordEncoder;
+    private AuthService authService;
 
     @Autowired
-    public AuthController(
-            AuthenticationManager authenticationManager,
-            UserRepository userRepository,
-            RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder
-    ) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
-    @ApiOperation(value = "REST API to Register or Signup user to Blog app")
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupDTO signupDTO) {
-        if (userRepository.existsByUserName(signupDTO.getUserName())) {
-            return new ResponseEntity<>("User with this name already exists!", HttpStatus.BAD_REQUEST);
-        }
+    // Build Login REST API
+    @PostMapping(value = {"/login", "/signin"})
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDTO loginDto){
+        String token = authService.login(loginDto);
 
-        if (userRepository.existsByEmail(signupDTO.getEmail())) {
-            return new ResponseEntity<>("User with this email already exists!", HttpStatus.BAD_REQUEST);
-        }
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
 
-        User user = new User();
-
-        user.setName(signupDTO.getName());
-        user.setUserName(signupDTO.getUserName());
-        user.setEmail(signupDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(signupDTO.getPassword()));
-
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
-
-        user.setRoles(Collections.singleton(roles));
-
-        userRepository.save(user);
-
-        return new ResponseEntity<>("User has ben successfully registered!", HttpStatus.OK);
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
-    @ApiOperation(value = "REST API to Signin or Login user to job search app")
-    @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDTO.getUserNameOrEmail(),
-                        loginDTO.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return new ResponseEntity<>("User signed-in successfully!", HttpStatus.OK);
+    // Build Register REST API
+    @PostMapping(value = {"/signup"})
+    public ResponseEntity<String> register(@RequestBody SignupDTO signupDTO){
+        String response = authService.signup(signupDTO);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

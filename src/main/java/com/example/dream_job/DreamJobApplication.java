@@ -1,6 +1,7 @@
 package com.example.dream_job;
 
 
+import com.example.dream_job.security.JWTAuthenticationEntryPoint;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,13 +14,17 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-@ComponentScan("com.example.dream_job.model")
 @EntityScan("com.example.dream_job.model")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example.dream_job")
 public class DreamJobApplication {
 	@Bean
 	ModelMapper createModelMapper() {
 		return new ModelMapper();
+	}
+
+	@Bean
+	public JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint() {
+		return new JWTAuthenticationEntryPoint();
 	}
 
 	public static void main(String[] args) {
