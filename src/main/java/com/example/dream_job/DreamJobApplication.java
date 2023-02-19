@@ -21,12 +21,7 @@ public class DreamJobApplication {
 	ModelMapper createModelMapper() {
 		return new ModelMapper();
 	}
-
-	@Bean
-	public JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint() {
-		return new JWTAuthenticationEntryPoint();
-	}
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DreamJobApplication.class, args);
 		System.out.println("Go to http://localhost:8080/index");

@@ -30,7 +30,8 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping
+    @ApiOperation(value = "Find all jobs REST API")
+    @GetMapping("/jobs")
     public ResponseEntity<Page<JobDTO>> getAllJobs(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
