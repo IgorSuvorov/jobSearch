@@ -98,12 +98,10 @@ public class JobServiceImpl implements JobService {
     }
 
     private JobDTO mapEntityToDTO(Job job) {
-        JobDTO jobDTO = modelMapper.map(job, JobDTO.class);
-        return jobDTO;
+        return modelMapper.map(job, JobDTO.class);
     }
 
     private Job mapDTOToEntity(JobDTO jobDTO) {
-        Job job = modelMapper.map(jobDTO, Job.class);
-        return job;
+        return modelMapper.map(jobDTO, Job.class);
     }
 }

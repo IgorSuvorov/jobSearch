@@ -101,12 +101,10 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 
     private ApplicantDTO mapEntityToDTO(Applicant applicant) {
-        ApplicantDTO applicantDTO = modelMapper.map(applicant, ApplicantDTO.class);
-        return applicantDTO;
+        return modelMapper.map(applicant, ApplicantDTO.class);
     }
 
     private Applicant mapDTOToEntity(ApplicantDTO applicantDTO) {
-        Applicant applicant = modelMapper.map(applicantDTO, Applicant.class);
-        return applicant;
+        return modelMapper.map(applicantDTO, Applicant.class);
     }
 }
