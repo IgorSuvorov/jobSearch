@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private AuthService authService;
+    private final AuthService authService;
 
     @Autowired
     public AuthController(AuthService authService) {
